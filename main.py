@@ -10,12 +10,12 @@ from pathlib import Path
 def main():
 
   with open("grammar.lark", 'r') as grammar_file:
-    l = Lark(grammar_file.read())
+    l = Lark(grammar_file.read(), keep_all_tokens=True, parser="lalr", lexer="basic")
   
   # test_cases(l)
 
   with open("code.txt", 'r') as code_file:
-    print(l.parse(code_file.read()))
+    print(l.parse(code_file.read()).pretty())
 
 if __name__ == "__main__":
   main()

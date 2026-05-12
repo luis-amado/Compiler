@@ -1,21 +1,5 @@
 program main {
-  var age : int;
-  var name : string;
-  var weight, height, bmi : float;
-  procedure calculate_bmi {
     begin;
-      bmi := weight / (height * height);
+        x := not(true) or not false;
     end;
-  }
-  begin;
-    age := 5;
-    weight := 65.3;
-    height := 171.2;
-    calculate_bmi();
-    write(bmi);
-    weight := 30;
-    height := 2;
-    calculate_bmi();
-    write(bmi);
-  end;
 }

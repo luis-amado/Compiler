@@ -25,7 +25,7 @@ expression: additive_expression ((">" | "<" | ">=" | "<=" | "==") additive_expre
 additive_expression: multiplicative_expression (("+" | "-" | "or") multiplicative_expression)*
 multiplicative_expression: factor (("*" | "/" | "%" | "and") factor)*
 
-factor: ("not" | "-")? (variable | constant | "(" expression ")")
+factor: ("not" | "-")? (constant | variable | "(" expression ")")
 variable: IDENTIFIER ("(" (expression ("," expression)*)? ")" | "[" expression "]" | "++" | "--")?
 //                      ^ probably not needed as functions cant return values
 
