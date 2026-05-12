@@ -1,3 +1,6 @@
 program main {
-    begin;write("Hello, world");end;
+    var i[3], n : int;
+    begin;
+        x := 1 + 5 * (3 / 2);
+    end;
 }

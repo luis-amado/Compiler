@@ -1,6 +1,9 @@
-start: "program" "main" "{" var_declaration* procedure* begin_end "}"
+start: "program" "main" "{" var_declaration* procedure* begin "}"
 
-var_declaration: "var" IDENTIFIER ("," IDENTIFIER)* ":" type ";"
+var_declaration: "var" single_var_declaration ("," single_var_declaration)* ":" type ";"
+?single_var_declaration: IDENTIFIER | array_declaration
+array_declaration: IDENTIFIER "[" INT "]"
+
 type: T_INT | T_FLOAT | T_STRING | T_CHAR | T_BOOL
 T_INT: "int"
 T_FLOAT: "float"
@@ -8,9 +11,9 @@ T_STRING: "string"
 T_CHAR: "char"
 T_BOOL: "bool"
 
-procedure: "procedure" IDENTIFIER "{" begin_end "}"
+procedure: "procedure" IDENTIFIER "{" begin "}"
 
-begin_end: "begin" ";" code_block* "end" ";"
+begin: "begin" ";" code_block* "end" ";"
 ?code_block: statement ";"
           | if | while | for
 
@@ -32,8 +35,11 @@ block: "{" code_block* "}"
 ?multiplicative_expression: factor ((MUL_OP | DIV_OP | MOD_OP | AND_OP) factor)*
 
 ?factor: ("not" | "-")? (constant | variable | "(" expression ")")
-?variable: IDENTIFIER ("[" expression "]" | "++" | "--")?
 
+variable: IDENTIFIER array_index (INCREMENTER | DECREMENTER)?
+array_index: ("[" expression "]")?
+INCREMENTER: "++"
+DECREMENTER: "--"
 constant: INT | FLOAT | CHAR | STRING | BOOL
 
 // Operators

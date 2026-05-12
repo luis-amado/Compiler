@@ -1,11 +1,17 @@
-from lark import Lark
+from lark import Lark, tree, exceptions
 from pathlib import Path
+import pydot
 
-def test_cases(tree):
+def test_cases(parser):
   folder_path = Path("tests")
   for file in folder_path.iterdir():
       with open(file, 'r') as test_file_code:
-        tree.parse(test_file_code.read())
+        try:
+          parser.parse(test_file_code.read())
+        except exceptions.LarkError as e:
+          print("Failed on file: ", file)
+          print(e)
+
 
 def main():
 
@@ -15,7 +21,10 @@ def main():
   test_cases(l)
 
   with open("code.txt", 'r') as code_file:
-    print(l.parse(code_file.read()))
+    parse_tree = l.parse(code_file.read())
+    tree.pydot__tree_to_png(parse_tree, "tree.png")
+    print(parse_tree)
+  
 
 if __name__ == "__main__":
   main()
