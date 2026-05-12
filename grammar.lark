@@ -1,0 +1,54 @@
+start: "program" "main" "{" var_declaration* procedure* begin_end "}"
+
+var_declaration: "var" " " IDENTIFIER ("," IDENTIFIER)* ":" TYPE ";"
+TYPE: "int" | "float" | "string" | "char" | "bool"
+
+procedure: "procedure" IDENTIFIER "{" begin_end "}"
+
+begin_end: "begin" ";" code_block* "end" ";"
+code_block: statement ";"
+          | if | while | for
+
+statement: "write" "(" expression ")"
+         | IDENTIFIER ("[" expression "]")? ":=" expression
+         | expression
+
+if: "if" "(" expression ")" "then" block ("else" block)?
+
+while: "while" "(" expression ")" "do" block
+
+for: "for" "(" statement ";" expression ";" statement ")" block
+
+block: "{" code_block* "}"
+
+expression: additive_expression ((">" | "<" | ">=" | "<=" | "==") additive_expression)?
+additive_expression: multiplicative_expression (("+" | "-" | "or") multiplicative_expression)*
+multiplicative_expression: factor (("*" | "/" | "%" | "and") factor)*
+
+factor: ("not" | "-")? (variable | constant | "(" expression ")")
+variable: IDENTIFIER ("(" (expression ("," expression)*)? ")" | "[" expression "]" | "++" | "--")?
+//                      ^ probably not needed as functions cant return values
+
+constant: INT | FLOAT | CHAR | STRING | BOOL
+
+// Regex
+LETTER: ("a".."z"|"A".."Z")
+NUMBER: "0".."9"
+IDENTIFIER: ("_"|LETTER) ("_"|LETTER|NUMBER)*
+
+COMMON_CHARS: LETTER | NUMBER | "_" | ":" | ";" | "." | "," | "<" | ">" | "=" | "(" | ")" | "[" | "]" | "{" | "}" | "+" | "-" | "*" | "/" | "%" | "|" | "&" | "!" | "\\" | "?" | "@" | "#" | "~" | "`" | "^" | " "
+ESCAPE_SEQUENCES: "\\\"" | "\\'" | "\\n" | "\\t" | "\\b" | "\\\\" | "\\0"
+STRING_CHAR: COMMON_CHARS | ESCAPE_SEQUENCES | "'"
+CHAR_CHAR: COMMON_CHARS | ESCAPE_SEQUENCES | "\""
+
+// Types literals
+INT: ("-")? NUMBER+
+FLOAT: ("-")? NUMBER* "." NUMBER~1..9
+STRING: "\""STRING_CHAR*"\""
+CHAR: "'"CHAR_CHAR"'"
+BOOL: "true" | "false"
+
+%import common.WORD
+%ignore " "
+%ignore "\n"
+%ignore "\t"
