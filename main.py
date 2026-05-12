@@ -10,12 +10,12 @@ def test_cases(tree):
 def main():
 
   with open("grammar.lark", 'r') as grammar_file:
-    l = Lark(grammar_file.read(), keep_all_tokens=True, parser="lalr", lexer="basic")
+    l = Lark(grammar_file.read(), parser="lalr", lexer="basic")
   
-  # test_cases(l)
+  test_cases(l)
 
   with open("code.txt", 'r') as code_file:
-    print(l.parse(code_file.read()).pretty())
+    print(l.parse(code_file.read()))
 
 if __name__ == "__main__":
   main()

@@ -1,6 +1,3 @@
 program main {
-    var x : char;
-    begin;
-        x := '\n';
-    end;
+    begin;write("Hello, world");end;
 }

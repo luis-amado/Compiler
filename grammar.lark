@@ -1,17 +1,23 @@
 start: "program" "main" "{" var_declaration* procedure* begin_end "}"
 
 var_declaration: "var" IDENTIFIER ("," IDENTIFIER)* ":" type ";"
-type: "int" | "float" | "string" | "char" | "bool"
+type: T_INT | T_FLOAT | T_STRING | T_CHAR | T_BOOL
+T_INT: "int"
+T_FLOAT: "float"
+T_STRING: "string"
+T_CHAR: "char"
+T_BOOL: "bool"
 
 procedure: "procedure" IDENTIFIER "{" begin_end "}"
 
 begin_end: "begin" ";" code_block* "end" ";"
-code_block: statement ";"
+?code_block: statement ";"
           | if | while | for
 
-statement: "write" "(" expression ")"
-         | IDENTIFIER ("[" expression "]")? ":=" expression
-         | expression
+?statement: write | assignment | function_call | expression
+write: "write" "(" expression ")"
+assignment: IDENTIFIER ("[" expression "]")? ":=" expression
+function_call: IDENTIFIER "(" ")"
 
 if: "if" "(" expression ")" "then" block ("else" block)?
 
@@ -21,15 +27,30 @@ for: "for" "(" statement ";" expression ";" statement ")" block
 
 block: "{" code_block* "}"
 
-expression: additive_expression ((">" | "<" | ">=" | "<=" | "==") additive_expression)?
-additive_expression: multiplicative_expression (("+" | "-" | "or") multiplicative_expression)*
-multiplicative_expression: factor (("*" | "/" | "%" | "and") factor)*
+?expression: additive_expression ((LT_OP | GT_OP | LTE_OP | GTE_OP | EQ_OP) additive_expression)?
+?additive_expression: multiplicative_expression ((ADD_OP | SUB_OP | OR_OP) multiplicative_expression)*
+?multiplicative_expression: factor ((MUL_OP | DIV_OP | MOD_OP | AND_OP) factor)*
 
-factor: ("not" | "-")? (constant | variable | "(" expression ")")
-variable: IDENTIFIER ("(" (expression ("," expression)*)? ")" | "[" expression "]" | "++" | "--")?
-//                      ^ probably not needed as functions cant return values
+?factor: ("not" | "-")? (constant | variable | "(" expression ")")
+?variable: IDENTIFIER ("[" expression "]" | "++" | "--")?
 
 constant: INT | FLOAT | CHAR | STRING | BOOL
+
+// Operators
+LT_OP: "<"
+GT_OP: ">"
+LTE_OP: "<="
+GTE_OP: ">="
+EQ_OP: "=="
+
+ADD_OP: "+"
+SUB_OP: "-"
+OR_OP: "or"
+
+MUL_OP: "*"
+DIV_OP: "/"
+MOD_OP: "%"
+AND_OP: "and"
 
 // Regex
 LETTER: ("a".."z"|"A".."Z")
