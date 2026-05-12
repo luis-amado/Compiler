@@ -1,11 +1,11 @@
 from lark import Lark
 from pathlib import Path
 
-# def test_cases(tree):
-#   folder_path = Path("tests")
-#   for file in folder_path.iterdir():
-#       with open(file, 'r') as test_file_code:
-#         tree.parse(test_file_code.read())
+def test_cases(tree):
+  folder_path = Path("tests")
+  for file in folder_path.iterdir():
+      with open(file, 'r') as test_file_code:
+        tree.parse(test_file_code.read())
 
 def main():
 

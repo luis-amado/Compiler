@@ -1,7 +1,7 @@
 start: "program" "main" "{" var_declaration* procedure* begin_end "}"
 
-var_declaration: "var" " " IDENTIFIER ("," IDENTIFIER)* ":" TYPE ";"
-TYPE: "int" | "float" | "string" | "char" | "bool"
+var_declaration: "var" IDENTIFIER ("," IDENTIFIER)* ":" type ";"
+type: "int" | "float" | "string" | "char" | "bool"
 
 procedure: "procedure" IDENTIFIER "{" begin_end "}"
 

@@ -1,5 +1,6 @@
 program main {
+    var x : char;
     begin;
-        x := not(true) or not false;
+        x := '\n';
     end;
 }
