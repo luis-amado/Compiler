@@ -1,6 +1,16 @@
 program main {
-    var i[3], n : int;
+    var n, r, a : int;
+    var fk: bool;
+    var s : string;
+    var u : char;
+
+    procedure test {
+        begin;
+            
+        end;
+    }
+
     begin;
-        x := 1 + 5 * (3 / 2);
+        
     end;
 }

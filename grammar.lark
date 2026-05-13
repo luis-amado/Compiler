@@ -3,13 +3,7 @@ start: "program" "main" "{" var_declaration* procedure* begin "}"
 var_declaration: "var" single_var_declaration ("," single_var_declaration)* ":" type ";"
 ?single_var_declaration: IDENTIFIER | array_declaration
 array_declaration: IDENTIFIER "[" INT "]"
-
-type: T_INT | T_FLOAT | T_STRING | T_CHAR | T_BOOL
-T_INT: "int"
-T_FLOAT: "float"
-T_STRING: "string"
-T_CHAR: "char"
-T_BOOL: "bool"
+!type: "int" | "float" | "string" | "char" | "bool"
 
 procedure: "procedure" IDENTIFIER "{" begin "}"
 
@@ -30,33 +24,22 @@ for: "for" "(" statement ";" expression ";" statement ")" block
 
 block: "{" code_block* "}"
 
-?expression: additive_expression ((LT_OP | GT_OP | LTE_OP | GTE_OP | EQ_OP) additive_expression)?
-?additive_expression: multiplicative_expression ((ADD_OP | SUB_OP | OR_OP) multiplicative_expression)*
-?multiplicative_expression: factor ((MUL_OP | DIV_OP | MOD_OP | AND_OP) factor)*
+?expression: additive_expression (rel_op additive_expression)?
+?additive_expression: multiplicative_expression (add_op multiplicative_expression)*
+?multiplicative_expression: factor (mul_op factor)*
 
 ?factor: ("not" | "-")? (constant | variable | "(" expression ")")
 
-variable: IDENTIFIER array_index (INCREMENTER | DECREMENTER)?
-array_index: ("[" expression "]")?
+variable: IDENTIFIER array_index? (INCREMENTER | DECREMENTER)?
+array_index: ("[" expression "]")
 INCREMENTER: "++"
 DECREMENTER: "--"
 constant: INT | FLOAT | CHAR | STRING | BOOL
 
 // Operators
-LT_OP: "<"
-GT_OP: ">"
-LTE_OP: "<="
-GTE_OP: ">="
-EQ_OP: "=="
-
-ADD_OP: "+"
-SUB_OP: "-"
-OR_OP: "or"
-
-MUL_OP: "*"
-DIV_OP: "/"
-MOD_OP: "%"
-AND_OP: "and"
+!rel_op: "<" | ">" | "<=" | ">=" | "=="
+!add_op: "+" | "-" | "or"
+!mul_op: "*" | "/" | "%" | "and"
 
 // Regex
 LETTER: ("a".."z"|"A".."Z")
@@ -64,6 +47,7 @@ NUMBER: "0".."9"
 IDENTIFIER: ("_"|LETTER) ("_"|LETTER|NUMBER)*
 
 COMMON_CHARS: LETTER | NUMBER | "_" | ":" | ";" | "." | "," | "<" | ">" | "=" | "(" | ")" | "[" | "]" | "{" | "}" | "+" | "-" | "*" | "/" | "%" | "|" | "&" | "!" | "\\" | "?" | "@" | "#" | "~" | "`" | "^" | " "
+ALPHABET: COMMON_CHARS | "'" | "\""
 ESCAPE_SEQUENCES: "\\\"" | "\\'" | "\\n" | "\\t" | "\\b" | "\\\\" | "\\0"
 STRING_CHAR: COMMON_CHARS | ESCAPE_SEQUENCES | "'"
 CHAR_CHAR: COMMON_CHARS | ESCAPE_SEQUENCES | "\""
