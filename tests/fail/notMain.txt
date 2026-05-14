@@ -1,0 +1,4 @@
+program not_main {
+  begin;
+  end;
+}

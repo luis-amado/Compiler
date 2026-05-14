@@ -1,0 +1,7 @@
+program main {
+  begin;
+    if (5 > 3) {
+      write("Hello");
+    }
+  end;
+}
