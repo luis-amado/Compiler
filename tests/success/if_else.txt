@@ -1,0 +1,11 @@
+program main {
+  var i : int;
+  begin;
+    i := 5;
+    if (i < 10) then {
+      write("Less than 10");
+    } else {
+      write("Not less than 10");
+    }
+  end;
+}

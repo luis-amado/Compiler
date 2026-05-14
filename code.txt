@@ -6,11 +6,10 @@ program main {
 
     procedure test {
         begin;
-            
         end;
     }
 
     begin;
-        
+        my_func();
     end;
 }

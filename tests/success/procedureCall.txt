@@ -1,0 +1,10 @@
+program main {
+  procedure call_me {
+    begin;
+      write("Hello!");
+    end;
+  }
+  begin;
+    call_me();
+  end;
+}

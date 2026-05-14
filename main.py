@@ -1,17 +1,22 @@
 from lark import Lark, tree, exceptions, Token, Tree
 from pathlib import Path
-import pydot
+import sys
 
+def run_test_pass(file, parser):
+  with open(file, 'r') as code:
+    try:
+      parser.parse(code.read())
+      print("Test case passed: ", file)
+    except exceptions.LarkError as e:
+      print("Test case failed: ", file)
+      print(e, file=sys.stderr)
 
 def test_cases(parser):
-  folder_path = Path("tests")
-  for file in folder_path.iterdir():
-      with open(file, 'r') as test_file_code:
-        try:
-          parser.parse(test_file_code.read())
-        except exceptions.LarkError as e:
-          print("Failed on file: ", file)
-          print(e)
+  professor_folder = "tests/professor"
+  success_folder = "tests/success"
+
+  for file in Path(professor_folder).iterdir(): run_test_pass(file, parser)
+  for file in Path(success_folder).iterdir(): run_test_pass(file, parser)
 
 def semantic_analysis(tree):
   # INT = "I"
@@ -56,11 +61,6 @@ def semantic_analysis(tree):
   for symbol in symbol_table:
     print(symbol, symbol_table[symbol])
 
-
-
-
-
-
 def main():
 
   with open("grammar.lark", 'r') as grammar_file:
@@ -68,11 +68,11 @@ def main():
   
   test_cases(l)
 
-  with open("code.txt", 'r') as code_file:
-    parse_tree = l.parse(code_file.read())
-    tree.pydot__tree_to_png(parse_tree, "tree.png")
-    # print(parse_tree.pretty())
-    semantic_analysis(parse_tree)
+  # with open("code.txt", 'r') as code_file:
+  #   parse_tree = l.parse(code_file.read())
+  #   tree.pydot__tree_to_png(parse_tree, "tree.png")
+  #   # print(parse_tree.pretty())
+  #   semantic_analysis(parse_tree)
   
 
 if __name__ == "__main__":

@@ -1,0 +1,10 @@
+program main {
+  var i : int;
+  begin;
+    i := 16;
+    while (i > 1) do {
+      write(i);
+      i := i / 2;
+    }
+  end;
+}

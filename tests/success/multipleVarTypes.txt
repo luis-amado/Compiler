@@ -1,0 +1,9 @@
+program main {
+  var a, b, c : int;
+  var d, e, f: string;
+  var t: char;
+  var bo: bool;
+  
+  begin;
+  end;
+}

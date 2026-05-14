@@ -1,0 +1,6 @@
+program main {
+  var i[5]: int;
+  begin;
+    i[0] := 10;
+  end;
+}

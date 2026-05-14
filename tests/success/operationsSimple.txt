@@ -1,0 +1,8 @@
+program main {
+  var a, b, c: int;
+  begin;
+    a := 1 + 2;
+    b := 2 * 4 * 6;
+    c := 2 - 3 / 2;
+  end;
+}
