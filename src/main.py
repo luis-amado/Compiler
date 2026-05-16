@@ -1,4 +1,6 @@
 from lark import Lark, Token, Tree, tree
+from ast_tree import ASTTransformer
+from run_test_cases import test_cases
 import parser
 
 def semantic_analysis(tree):
@@ -44,12 +46,25 @@ def semantic_analysis(tree):
   for symbol in symbol_table:
     print(symbol, symbol_table[symbol])
 
+
 def main():
 
-  parse_tree = parser.parse_file("code.txt")
-  tree.pydot__tree_to_png(parse_tree, "tree.png")
+  parse_tree = parser.parse_file("../code.txt")
+  tree.pydot__tree_to_png(parse_tree, "../tree.png")
   print(parse_tree.pretty())
   semantic_analysis(parse_tree)
+
+  #para probar el arbol
+  with open("../grammar.lark", 'r') as grammar_file:
+    l = Lark(grammar_file.read(), parser="lalr", lexer="basic", propagate_positions=True)
+    test_cases(l)
+  
+  with open("../code.txt", 'r') as code_file:
+    parse_tree = l.parse(code_file.read())
+    #tree.pydot__tree_to_png(parse_tree, "../tree.png")
+    ast = ASTTransformer().transform(parse_tree)
+    print(ast)
+    
   
 if __name__ == "__main__":
   main()

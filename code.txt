@@ -1,15 +1,9 @@
-program main {
-    var n, r, a : int;
-    var fk: bool;
-    var s : string;
-    var u : char;
-
-    procedure test {
-        begin;
-        end;
-    }
-
-    begin;
-        my_func();
-    end;
+program main{
+	begin;
+		write("hola mundo");
+		x := 5;
+		y := 3.14;
+		flag := true;
+		letter := 'a';
+	end;
 }
