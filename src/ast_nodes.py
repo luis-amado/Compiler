@@ -6,6 +6,7 @@ class ProgramNode:
     procedures: list
     begin_end: any
 
+#para las declaraciones de variables
 @dataclass
 class VarNode:
     identifier: list 
@@ -78,6 +79,7 @@ class UnitaryOpNode:
     operator: str
     value: any
 
+#para el uso o acceso de las variables
 @dataclass
 class VariableNode:
     name: str

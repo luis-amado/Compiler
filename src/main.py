@@ -1,4 +1,6 @@
 from lark import Token, Tree, tree
+from ast_tree import ASTTransformer
+from run_test_cases import test_cases
 import parser
 
 def semantic_analysis(tree):
@@ -52,12 +54,17 @@ def semantic_analysis(tree):
   for symbol in symbol_table:
     print(symbol, symbol_table[symbol])
 
+
 def main():
 
   parse_tree = parser.parse_file("code.txt")
   tree.pydot__tree_to_png(parse_tree, "tree.png")
   print(parse_tree.pretty())
   semantic_analysis(parse_tree)
+
+  ast = ASTTransformer().transform(parse_tree)
+  print(ast)
+    
   
 if __name__ == "__main__":
   main()

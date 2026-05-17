@@ -9,18 +9,18 @@ procedure: "procedure" IDENTIFIER "{" begin "}"
 
 begin: "begin" ";" code_block* "end" ";"
 ?code_block: statement ";"
-          | if | while | for
+          | if_ | while_ | for_stmt
 
 ?statement: write | assignment | function_call | expression
 write: "write" "(" expression ")"
 assignment: IDENTIFIER ("[" expression "]")? ":=" expression
 function_call: IDENTIFIER "(" ")"
 
-if: "if" "(" expression ")" "then" block ("else" block)?
+if_: "if" "(" expression ")" "then" block ("else" block)?
 
-while: "while" "(" expression ")" "do" block
+while_: "while" "(" expression ")" "do" block
 
-for: "for" "(" statement ";" expression ";" statement ")" block
+for_stmt: "for" "(" statement ";" expression ";" statement ")" block
 
 block: "{" code_block* "}"
 
