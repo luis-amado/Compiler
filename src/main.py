@@ -1,4 +1,4 @@
-from lark import Lark, Token, Tree, tree
+from lark import Token, Tree, tree
 import parser
 
 def semantic_analysis(tree):
@@ -8,10 +8,11 @@ def semantic_analysis(tree):
   # STRING = "S"
   # CHAR = "C"
   # SEMANTIC_ERROR = "X"
+  # NONE
 
   # If a type combo is not included, all are considered to be errors (eg, string and int)
   semantic_rules = {
-  # op1,op2,     +,   *-,  /%,  ><,  ==,  &|!
+  # op1,op2,     +,   *-,  /%,  ><,  ==,  &|
     ('I', 'I'): ('I', 'I', 'F', 'B', 'B', 'X'),
     ('I', 'F'): ('F', 'F', 'F', 'B', 'B', 'X'),
     ('F', 'I'): ('F', 'F', 'F', 'B', 'B', 'X'),
@@ -19,6 +20,13 @@ def semantic_analysis(tree):
     ('S', 'C'): ('S', 'X', 'X', 'X', 'B', 'X'),
     ('C', 'S'): ('S', 'X', 'X', 'X', 'B', 'X'),
     ('B', 'B'): ('X', 'X', 'X', 'X', 'B', 'B'),
+  }
+
+  unary_semantic_rules = {
+    #    -,  !
+    'I': ('I', 'X'),
+    'F': ('F', 'X'),
+    'B': ('X', 'B')
   }
 
   # Name, location in memory, type (ignoring arrays for now)

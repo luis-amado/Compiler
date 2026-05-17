@@ -11,5 +11,7 @@ program main {
 
     begin;
         my_func();
+        a := not(b and c);
+        a++;
     end;
 }
