@@ -2,14 +2,20 @@ from lark import exceptions
 from pathlib import Path
 import sys
 from parser import get_parser
+from ast_tree import ASTTransformer
 
 def run_test_pass(file, parser):
   with open(file, 'r') as code:
     try:
-      parser.parse(code.read())
+      parse_tree = parser.parse(code.read())
+
+      ast = str(ASTTransformer().transform(parse_tree))
+      if "TREE" in ast or "RULE" in ast or "Token" in ast:
+        raise Exception("AST tree contains lark artifacts.")
+      
       print("Test case passed: ", file)
       return True
-    except exceptions.LarkError as e:
+    except Exception as e:
       print("\033[31mTest case failed: \033[0m", file)
       print(e)
       return False

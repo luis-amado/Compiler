@@ -24,18 +24,18 @@ for_stmt: "for" "(" statement ";" expression ";" statement ")" block
 
 block: "{" code_block* "}"
 
-?expression: additive_expression (rel_op additive_expression)?
+?expression: relative_expression
+?relative_expression: additive_expression (rel_op additive_expression)?
 ?additive_expression: multiplicative_expression (add_op multiplicative_expression)*
 ?multiplicative_expression: factor (mul_op factor)*
 
 ?factor: unary_operator? (constant | variable | "(" expression ")")
 !unary_operator: "not" | "-"
 
-variable: IDENTIFIER array_index? (INCREMENTER | DECREMENTER)?
+variable: IDENTIFIER array_index? step_operator?
 array_index: ("[" expression "]")
-INCREMENTER: "++"
-DECREMENTER: "--"
-constant: INT | FLOAT | CHAR | STRING | BOOL
+!step_operator: "++" | "--"
+constant: INT | FLOAT | CHAR | STRING | bool
 
 // Operators
 !rel_op: "<" | ">" | "<=" | ">=" | "=="
@@ -58,7 +58,7 @@ INT: ("-")? NUMBER+
 FLOAT: ("-")? NUMBER* "." NUMBER~1..9
 STRING: "\""STRING_CHAR*"\""
 CHAR: "'"CHAR_CHAR"'"
-BOOL: "true" | "false"
+!bool: "true" | "false"
 
 %import common.WORD
 %ignore " "

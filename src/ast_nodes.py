@@ -1,43 +1,27 @@
 from dataclasses import dataclass
 
-@dataclass 
-class ProgramNode:
-    var_declarations: list
-    procedures: list
-    begin_end: any
-
 #para las declaraciones de variables
 @dataclass
-class VarNode:
-    identifier: list 
+class VarDeclarationNode:
+    identifiers: list[str] 
     var_type: str
-
-@dataclass
-class ProcedureNode:
-    procedure_name: str
-    begin_end: any
-
-@dataclass
-class BeginEndNode:
-    code_block: list
-
 @dataclass
 class IfNode:
-    exp: any
-    code_block: any
-    else_block: any = None
+    condition: any
+    code_blocks: any
+    else_blocks: any = None
 
 @dataclass
 class WhileNode:
-    exp: any
-    code_block: any
+    condition: any
+    code_blocks: any
 
 @dataclass
 class ForNode:
-    inicialization: any
+    initialization: any
     condition: any
     step: any
-    code_block: any
+    code_blocks: any
 
 @dataclass 
 class WriteNode:
@@ -47,6 +31,18 @@ class WriteNode:
 class AssignmentNode:
     identifier: str
     value: any
+@dataclass
+class BeginEndNode:
+    code_blocks: list[IfNode | WhileNode | ForNode | WriteNode | AssignmentNode]
+@dataclass
+class ProcedureNode:
+    procedure_name: str
+    begin_end: BeginEndNode
+@dataclass 
+class ProgramNode:
+    var_declarations: list[VarDeclarationNode]
+    procedures: list[ProcedureNode]
+    begin_end: BeginEndNode
 
 @dataclass
 class IntNode:
@@ -83,7 +79,17 @@ class UnitaryOpNode:
 @dataclass
 class VariableNode:
     name: str
+    array_index: any = None
+    step_operator: str = None
 
+@dataclass
+class StepOperatorNode:
+    type: str
 
+@dataclass
+class ArrayIndexNode:
+    index: any
 
-
+@dataclass
+class FunctionCallNode:
+    name: str

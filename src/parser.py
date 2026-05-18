@@ -8,3 +8,7 @@ def parse_file(path):
   parser = get_parser()
   with open(path, 'r') as code_file:
     return parser.parse(code_file.read())
+
+def parse_code(code):
+  parser = get_parser()
+  return parser.parse(code)
