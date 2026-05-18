@@ -1,9 +1,16 @@
 from dataclasses import dataclass
 
 #para las declaraciones de variables
+
+@dataclass
+class ArrayDeclarationNode:
+    identifier: str
+    size: int
+
 @dataclass
 class VarDeclarationNode:
-    identifiers: list[str] 
+    identifiers: list[str]
+    arrays: list[ArrayDeclarationNode]
     var_type: str
 @dataclass
 class IfNode:

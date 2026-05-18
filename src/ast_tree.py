@@ -108,14 +108,24 @@ class ASTTransformer(Transformer):
         return tokens
     
     def var_declaration(self, tokens):
-        identifiers = [
-            _get_token_value(identifier_token)
-            for identifier_token in tokens[:-1]
-            if isinstance(identifier_token, Token)
-        ]
+        identifiers = []
+        arrays = []
+        for identifier_token in tokens[:-1]:
+            if isinstance(identifier_token, ArrayDeclarationNode):
+                identifiers.append(identifier_token.identifier)
+                arrays.append(identifier_token)
+            else:
+                identifiers.append(_get_token_value(identifier_token))
         type = _get_token_value(tokens[-1])
 
-        return VarDeclarationNode(identifiers, type)
+        return VarDeclarationNode(identifiers, arrays, type)
+
+    def array_declaration(self, tokens):
+        size_token = _extract_nested(tokens[1])
+        if isinstance(size_token, IntNode):
+            return ArrayDeclarationNode(_get_token_value(tokens[0]), size_token.value)
+        else:
+            raise Exception("Invalid array size declaration parameter")
     
     def procedure(self, tokens):
         return ProcedureNode(_get_token_value(tokens[0]), tokens[1])
