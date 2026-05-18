@@ -1,102 +1,108 @@
-from dataclasses import dataclass
-
-#para las declaraciones de variables
+from dataclasses import dataclass, field
 
 @dataclass
-class ArrayDeclarationNode:
-    identifier: str
+class ASTNode:
+    line: int = field(default=None, kw_only=True, repr=False)
+    column: int = field(default=None, kw_only=True, repr=False)
+
+@dataclass
+class IdentifierNode(ASTNode):
+    value :str
+@dataclass
+class ArrayDeclarationNode(ASTNode):
+    identifier: IdentifierNode
     size: int
 
 @dataclass
-class VarDeclarationNode:
-    identifiers: list[str]
+class VarDeclarationNode(ASTNode):
+    identifiers: list[IdentifierNode]
     arrays: list[ArrayDeclarationNode]
     var_type: str
 @dataclass
-class IfNode:
+class IfNode(ASTNode):
     condition: any
     code_blocks: any
     else_blocks: any = None
 
 @dataclass
-class WhileNode:
+class WhileNode(ASTNode):
     condition: any
     code_blocks: any
 
 @dataclass
-class ForNode:
+class ForNode(ASTNode):
     initialization: any
     condition: any
     step: any
     code_blocks: any
 
 @dataclass 
-class WriteNode:
+class WriteNode(ASTNode):
     exp: any
 
 @dataclass
-class AssignmentNode:
-    identifier: str
+class AssignmentNode(ASTNode):
+    identifier: IdentifierNode
     value: any
 @dataclass
-class BeginEndNode:
+class BeginEndNode(ASTNode):
     code_blocks: list[IfNode | WhileNode | ForNode | WriteNode | AssignmentNode]
 @dataclass
-class ProcedureNode:
-    procedure_name: str
+class ProcedureNode(ASTNode):
+    procedure_name: IdentifierNode
     begin_end: BeginEndNode
-@dataclass 
-class ProgramNode:
+@dataclass
+class ProgramNode(ASTNode):
     var_declarations: list[VarDeclarationNode]
     procedures: list[ProcedureNode]
     begin_end: BeginEndNode
 
 @dataclass
-class IntNode:
+class IntNode(ASTNode):
     value: int
 
 @dataclass
-class FloatNode:
+class FloatNode(ASTNode):
     value: float
 
 @dataclass
-class StringNode:
+class StringNode(ASTNode):
     value: str
 
 @dataclass
-class BoolNode:
+class BoolNode(ASTNode):
     value: bool
 
 @dataclass
-class CharNode:
+class CharNode(ASTNode):
     value: str
 
 @dataclass
-class OperationNode:
+class OperationNode(ASTNode):
     valueLeft: any
     operator: str
     valueRight: any
 
 @dataclass
-class UnitaryOpNode:
+class UnitaryOpNode(ASTNode):
     operator: str
     value: any
 
 #para el uso o acceso de las variables
 @dataclass
-class VariableNode:
+class VariableNode(ASTNode):
     name: str
     array_index: any = None
     step_operator: str = None
 
 @dataclass
-class StepOperatorNode:
+class StepOperatorNode(ASTNode):
     type: str
 
 @dataclass
-class ArrayIndexNode:
+class ArrayIndexNode(ASTNode):
     index: any
 
 @dataclass
-class FunctionCallNode:
+class FunctionCallNode(ASTNode):
     name: str

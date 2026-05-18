@@ -11,7 +11,7 @@ def run_test_pass(file, parser):
 
       ast = str(ASTTransformer().transform(parse_tree))
       if "TREE" in ast or "RULE" in ast or "Token" in ast:
-        raise Exception("AST tree contains lark artifacts.")
+        raise Exception("AST tree might contain lark artifacts. Avoid using identifiers like TREE, RULE or TOKEN within test cases")
       
       print("Test case passed: ", file)
       return True
