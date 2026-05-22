@@ -80,10 +80,6 @@ class ASTTransformer(Transformer):
             return VariableNode(_extract_nested(tokens[0]), None, tokens[1], line=meta.line, column=meta.column)
 
     @v_args(meta=True)
-    def array_index(self, meta, tokens):
-        return ArrayIndexNode(_extract_nested(tokens[0]), line=meta.line, column=meta.column)
-
-    @v_args(meta=True)
     def step_operator(self, meta, tokens):
         return StepOperatorNode(_get_token_value(tokens[0]), line=meta.line, column=meta.column)
 
