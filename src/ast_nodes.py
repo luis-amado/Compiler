@@ -55,7 +55,7 @@ class VariableNode(ASTNode):
 
 @dataclass
 class FunctionCallNode(ASTNode):
-    name: str
+    name: IdentifierNode
     args: list[ExpressionNode] = field(default_factory=list)
 
 # --- Control Flow & Statement Nodes ---

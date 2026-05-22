@@ -21,7 +21,7 @@ def generate_quadruples(program: nodes.ProgramNode) -> list[Quadruple]:
     available_temps = []
     new_temp = 0
 
-    symbol_types = {}
+    function_addresses = {}
     
     def temp():
         nonlocal new_temp
@@ -104,6 +104,8 @@ def generate_quadruples(program: nodes.ProgramNode) -> list[Quadruple]:
                 generate_code_blocks([node.step])
                 gen_q("goto", None, None, condition_jump)
                 fill_jump(jump_to_end, curr_address() + 1)
+            elif isinstance(node, nodes.FunctionCallNode):
+                gen_q("call", None, None, function_addresses[node.name.value])
             
     default_values = {
         "int": 0,
@@ -118,6 +120,19 @@ def generate_quadruples(program: nodes.ProgramNode) -> list[Quadruple]:
         for identifier in var_declaration.identifiers:
             gen_q(":=", default_values[var_declaration.var_type], var_declaration.var_type, Variable(identifier.value))
 
+    # Functions
+    jump_to_start = -1
+    if len(program.procedures) > 0:
+        jump_to_start = gen_q("goto", None, None, None)
+    
+    for procedure in program.procedures:
+        function_addresses[procedure.procedure_name.value] = curr_address() + 1
+        generate_code_blocks(procedure.begin_end.code_blocks)
+        gen_q("return", None, None, None)
+
+    # Main code block
+    if jump_to_start > -1:
+        fill_jump(jump_to_start, curr_address() + 1)
     generate_code_blocks(program.begin_end.code_blocks)
 
     gen_q("end", None, None, None)

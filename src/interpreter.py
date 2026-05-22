@@ -20,6 +20,8 @@ write
 goto
 gotof
 end
+call
+return
 """
 
 @dataclass
@@ -30,6 +32,7 @@ class Symbol:
 def interpret(quadruples: list[Quadruple]):
 
   symbols: dict[str, Symbol] = {}
+  jump_stack = []
 
   def set_value(symbol, value):
     if symbol not in symbols:
@@ -84,6 +87,13 @@ def interpret(quadruples: list[Quadruple]):
       if not get_value(q.operand1):
         i = q.result
         continue
+    elif op == "call":
+      jump_stack.append(i + 1)
+      i = q.result
+      continue
+    elif op == "return":
+      i = jump_stack.pop()
+      continue
     elif op == ":=":
       if q.operand2 is not None:
         # Variable initialization
