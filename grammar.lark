@@ -12,7 +12,7 @@ begin: "begin" ";" code_block* "end" ";"
 
 ?statement: write | assignment | function_call | expression
 write: "write" "(" expression ")" | "writeln" "(" expression ")"
-assignment: IDENTIFIER ("[" expression "]")? ":=" expression
+assignment: IDENTIFIER ":=" expression
 function_call: IDENTIFIER "(" ")"
 
 if_: "if" "(" expression ")" "then" block ("else" block)?
