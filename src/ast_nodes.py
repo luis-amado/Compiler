@@ -49,13 +49,8 @@ class StepOperatorNode(ASTNode):
     type: str
 
 @dataclass
-class ArrayIndexNode(ASTNode):
-    index: ExpressionNode
-
-@dataclass
 class VariableNode(ASTNode):
     name: str
-    array_index: Optional[ArrayIndexNode] = None
     step_operator: Optional[StepOperatorNode] = None
 
 @dataclass
@@ -95,14 +90,8 @@ class AssignmentNode(ASTNode):
 # --- Structure Nodes ---
 
 @dataclass
-class ArrayDeclarationNode(ASTNode):
-    identifier: IdentifierNode
-    size: int
-
-@dataclass
 class VarDeclarationNode(ASTNode):
     identifiers: list[IdentifierNode]
-    arrays: list[ArrayDeclarationNode]
     var_type: str
 
 @dataclass
