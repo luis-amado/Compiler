@@ -16,7 +16,7 @@ def semantic_analysis(ast: ProgramNode, print_fn = print):
   }
 
   unary_semantic_rules = {
-    #    -,  !
+    #    -,  !,
     'I': ('I', 'X'),
     'F': ('F', 'X'),
     'B': ('X', 'B')

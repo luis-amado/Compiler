@@ -54,7 +54,7 @@ class ArrayIndexNode(ASTNode):
 
 @dataclass
 class VariableNode(ASTNode):
-    name: str
+    name: IdentifierNode
     array_index: Optional[ArrayIndexNode] = None
     step_operator: Optional[StepOperatorNode] = None
 
@@ -68,20 +68,20 @@ class FunctionCallNode(ASTNode):
 @dataclass
 class IfNode(ASTNode):
     condition: ExpressionNode
-    code_blocks: list[StatementNode]
-    else_blocks: Optional[list[StatementNode]] = None
+    code_blocks: list[CodeBlockNode]
+    else_blocks: Optional[list[CodeBlockNode]] = None
 
 @dataclass
 class WhileNode(ASTNode):
     condition: ExpressionNode
-    code_blocks: list[StatementNode]
+    code_blocks: list[CodeBlockNode]
 
 @dataclass
 class ForNode(ASTNode):
-    initialization: AssignmentNode
+    initialization: StatementNode
     condition: ExpressionNode
-    step: Union[AssignmentNode, VariableNode]
-    code_blocks: list[StatementNode]
+    step: StatementNode
+    code_blocks: list[CodeBlockNode]
 
 @dataclass 
 class WriteNode(ASTNode):
@@ -107,7 +107,7 @@ class VarDeclarationNode(ASTNode):
 
 @dataclass
 class BeginEndNode(ASTNode):
-    code_blocks: list[StatementNode]
+    code_blocks: list[CodeBlockNode]
 
 @dataclass
 class ProcedureNode(ASTNode):
@@ -122,12 +122,18 @@ class ProgramNode(ASTNode):
 
 # --- The Union Type Definitions ---
 
+LiteralNode = Union[
+    IntNode, FloatNode, StringNode, BoolNode, CharNode
+]
+
 ExpressionNode = Union[
-    IntNode, FloatNode, StringNode, BoolNode, CharNode, 
-    VariableNode, FunctionCallNode, OperationNode, UnitaryOpNode
+    LiteralNode, VariableNode, OperationNode, UnitaryOpNode
 ]
 
 StatementNode = Union[
-    IfNode, WhileNode, ForNode, WriteNode, AssignmentNode, 
-    ExpressionNode, BeginEndNode
+    WriteNode, AssignmentNode, FunctionCallNode, ExpressionNode
+]
+
+CodeBlockNode = Union[
+    IfNode, WhileNode, ForNode, StatementNode
 ]

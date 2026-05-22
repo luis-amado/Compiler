@@ -35,7 +35,7 @@ class ASTTransformer(Transformer):
     def start(self, meta, items):
         var_declarations = _filter_items_by_type(items, VarDeclarationNode)
         procedures = _filter_items_by_type(items, ProcedureNode)
-        begin_end = _filter_items_by_type(items, BeginEndNode)
+        begin_end = _filter_items_by_type(items, BeginEndNode)[0]
         return ProgramNode(var_declarations, procedures, begin_end, line=meta.line, column=meta.column)
     
     def INT(self, token):
