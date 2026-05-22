@@ -71,6 +71,7 @@ def interpret(quadruples: list[Quadruple]):
     elif op == "<=": return op1 <= op2
     elif op == ">=": return op1 >= op2
     elif op == "==": return op1 == op2
+    elif op == "!=": return op1 != op2
     elif op == "and": return op1 and op2
     elif op == "or": return op1 or op2
 
