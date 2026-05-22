@@ -5,14 +5,14 @@ var_declaration: "var" single_var_declaration ("," single_var_declaration)* ":" 
 array_declaration: IDENTIFIER "[" INT "]"
 !type: "int" | "float" | "string" | "char" | "bool"
 
-procedure: "procedure" IDENTIFIER "{" begin "}"
+procedure: "function" IDENTIFIER "(" ")" "{" begin "}"
 
 begin: "begin" ";" code_block* "end" ";"
 ?code_block: statement ";"
           | if_ | while_ | for_stmt
 
 ?statement: write | assignment | function_call | expression
-write: "write" "(" expression ")"
+write: "write" "(" expression ")" | "writeln" "(" expression ")"
 assignment: IDENTIFIER ("[" expression "]")? ":=" expression
 function_call: IDENTIFIER "(" ")"
 

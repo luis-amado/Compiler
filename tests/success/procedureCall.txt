@@ -1,5 +1,5 @@
 program main {
-  procedure call_me {
+  function call_me ( ) {
     begin;
       write("Hello!");
     end;

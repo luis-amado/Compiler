@@ -1,8 +1,11 @@
 program main {
-  procedure test {
+
+  function test() {
     begin;
+  
     end;
   }
   begin;
+    test();
   end;
 }

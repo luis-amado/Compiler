@@ -50,7 +50,7 @@ class StepOperatorNode(ASTNode):
 
 @dataclass
 class ArrayIndexNode(ASTNode):
-    index: ExpressionNode  # Changed to ExpressionNode so you can do arr[i + 1]
+    index: ExpressionNode
 
 @dataclass
 class VariableNode(ASTNode):
@@ -121,7 +121,6 @@ class ProgramNode(ASTNode):
     begin_end: BeginEndNode
 
 # --- The Union Type Definitions ---
-# We define these at the end so all classes they reference already exist.
 
 ExpressionNode = Union[
     IntNode, FloatNode, StringNode, BoolNode, CharNode, 
