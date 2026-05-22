@@ -1,8 +1,7 @@
 start: "program" "main" "{" var_declaration* procedure* begin "}"
 
 var_declaration: "var" single_var_declaration ("," single_var_declaration)* ":" type ";"
-?single_var_declaration: IDENTIFIER | array_declaration
-array_declaration: IDENTIFIER "[" INT "]"
+?single_var_declaration: IDENTIFIER
 !type: "int" | "float" | "string" | "char" | "bool"
 
 procedure: "function" IDENTIFIER "(" ")" "{" begin "}"
@@ -13,7 +12,7 @@ begin: "begin" ";" code_block* "end" ";"
 
 ?statement: write | assignment | function_call | expression
 write: "write" "(" expression ")" | "writeln" "(" expression ")"
-assignment: IDENTIFIER ("[" expression "]")? ":=" expression
+assignment: IDENTIFIER ":=" expression
 function_call: IDENTIFIER "(" ")"
 
 if_: "if" "(" expression ")" "then" block ("else" block)?
@@ -32,8 +31,7 @@ block: "{" code_block* "}"
 ?factor: unary_operator? (constant | variable | "(" expression ")")
 !unary_operator: "not" | "-"
 
-variable: IDENTIFIER array_index? step_operator?
-array_index: ("[" expression "]")
+variable: IDENTIFIER step_operator?
 !step_operator: "++" | "--"
 constant: INT | FLOAT | CHAR | STRING | bool
 

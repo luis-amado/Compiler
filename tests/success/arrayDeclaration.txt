@@ -1,5 +1,0 @@
-program main {
-  var i[5]: int;
-  begin;
-  end;
-}
