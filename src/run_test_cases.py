@@ -1,7 +1,7 @@
 from lark import exceptions
 from pathlib import Path
 import sys
-from parser import get_parser
+from Parser.parser import get_parser
 
 def run_test_pass(file, parser):
   with open(file, 'r') as code:

@@ -1,4 +1,4 @@
-from quadruple_generator import Quadruple, Operand, Variable
+from Quadruples.quadruple_generator import Quadruple, Operand, Variable
 from dataclasses import dataclass
 
 """

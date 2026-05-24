@@ -1,4 +1,4 @@
-from ast_nodes import *
+from AST.ast_nodes import *
 
 class SemanticError(Exception):
   pass

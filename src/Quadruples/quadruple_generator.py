@@ -1,6 +1,6 @@
 from __future__ import annotations
 from dataclasses import dataclass
-import ast_nodes as nodes
+import AST.ast_nodes as nodes
 
 @dataclass
 class Variable:
