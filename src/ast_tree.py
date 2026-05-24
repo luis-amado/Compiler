@@ -1,3 +1,5 @@
+from curses import meta
+
 from lark import Transformer, Token, Tree, v_args
 from ast_nodes import *
 
@@ -30,7 +32,7 @@ def _handle_expression(tokens, meta):
         return op
 
 class ASTTransformer(Transformer):
-    
+
     @v_args(meta=True)
     def start(self, meta, items):
         var_declarations = _filter_items_by_type(items, VarDeclarationNode)
@@ -77,8 +79,15 @@ class ASTTransformer(Transformer):
         if len(tokens) == 1:
             return VariableNode(_extract_nested(tokens[0]), line=meta.line, column=meta.column)
         elif isinstance(tokens[1], StepOperatorNode):
+            return VariableNode(_extract_nested(tokens[0]), tokens[1], line=meta.line, column=meta.column)
+    """
+    @v_args(meta=True)
+    def variable(self, meta, tokens):
+        if len(tokens) == 1:
+            return VariableNode(_extract_nested(tokens[0]), line=meta.line, column=meta.column)
+        elif isinstance(tokens[1], StepOperatorNode):
             return VariableNode(_extract_nested(tokens[0]), None, tokens[1], line=meta.line, column=meta.column)
-
+    """
     @v_args(meta=True)
     def step_operator(self, meta, tokens):
         return StepOperatorNode(_get_token_value(tokens[0]), line=meta.line, column=meta.column)
@@ -123,6 +132,13 @@ class ASTTransformer(Transformer):
     
     @v_args(meta=True)
     def var_declaration(self, meta, tokens):
+        identifiers = [_extract_nested(identifier_token) for identifier_token in tokens[:-1]]
+        type_ = _get_token_value(tokens[-1])
+        return VarDeclarationNode(identifiers, type_, line=meta.line, column=meta.column)
+
+    """
+    @v_args(meta=True)
+    def var_declaration(self, meta, tokens):
         identifiers = []
         for identifier_token in tokens[:-1]:
             if isinstance(identifier_token):
@@ -132,6 +148,7 @@ class ASTTransformer(Transformer):
         type = _get_token_value(tokens[-1])
 
         return VarDeclarationNode(identifiers, type, line=meta.line, column=meta.column)
+        """
     
     @v_args(meta=True)
     def procedure(self, meta, tokens):

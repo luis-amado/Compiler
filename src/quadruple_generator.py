@@ -137,8 +137,6 @@ def generate_quadruples(program: nodes.ProgramNode) -> list[Quadruple]:
 
     gen_q("end", None, None, None)
     
-
-
     return quadruples
 
 def print_quadruples(quadruples: list[Quadruple]):
