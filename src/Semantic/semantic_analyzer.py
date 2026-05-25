@@ -71,8 +71,7 @@ def semantic_analysis(ast: ProgramNode, print_fn=print):
 
   for procedure in ast.procedures:
     analyze_block(procedure.begin_end, symbol_table)
-
-  print_fn(symbol_table)
+    
   return symbol_table
 
 def register_variables(var_declarations, symbol_table, last_address):
