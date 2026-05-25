@@ -68,6 +68,8 @@ val = 100.0
 test_cases = {
     # Arithmetic & Unary
     "a + b": a + b,
+    "a / d": a // d,
+    "10 / 8": 10 // 8,
     "x - y": x - y,
     "10.0 * 2.5": 10.0 * 2.5,
     "val / 4.0": val / 4.0,
@@ -199,7 +201,7 @@ def run_operation_tests():
             if results[0] == test_cases[test_case]:
                 print(f"TEST PASSED: {test_case}")
             else:
-                raise Exception("Incorrect result")
+                raise Exception(f"Incorrect result {results[0]} (expected: {test_cases[test_case]})")
         except Exception as e:
             fail_count += 1
             print(f"\033[31mTEST FAILED: {test_case} ({e})\033[0m")

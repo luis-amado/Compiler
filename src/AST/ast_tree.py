@@ -90,6 +90,14 @@ class ASTTransformer(Transformer):
         return FunctionCallNode(_extract_nested(tokens[0]), line=meta.line, column=meta.column)
     
     @v_args(meta=True)
+    def relative_expression_or(self, meta, tokens):
+        return _handle_expression(tokens, meta)
+    
+    @v_args(meta=True)
+    def relative_expression_and(self, meta, tokens):
+        return _handle_expression(tokens, meta)
+    
+    @v_args(meta=True)
     def relative_expression(self, meta, tokens):
         return _handle_expression(tokens, meta)
     

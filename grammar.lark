@@ -23,12 +23,14 @@ for_stmt: "for" "(" statement ";" expression ";" statement ")" block
 
 block: "{" code_block* "}"
 
-?expression: relative_expression
+?expression: relative_expression_or
+?relative_expression_or: relative_expression_and (or_op relative_expression_and)*
+?relative_expression_and: relative_expression (and_op relative_expression)*
 ?relative_expression: additive_expression (rel_op additive_expression)?
 ?additive_expression: multiplicative_expression (add_op multiplicative_expression)*
 ?multiplicative_expression: factor (mul_op factor)*
 
-?factor: unary_operator? (constant | variable | "(" expression ")")
+?factor: unary_operator* (constant | variable | "(" expression ")")
 !unary_operator: "not" | "-"
 
 variable: IDENTIFIER step_operator?
@@ -37,8 +39,10 @@ constant: INT | FLOAT | CHAR | STRING | bool
 
 // Operators
 !rel_op: "<" | ">" | "<=" | ">=" | "==" | "!="
-!add_op: "+" | "-" | "or"
-!mul_op: "*" | "/" | "%" | "and"
+!add_op: "+" | "-"
+!mul_op: "*" | "/" | "%"
+!or_op: "or"
+!and_op: "and"
 
 // Regex
 LETTER: ("a".."z"|"A".."Z")

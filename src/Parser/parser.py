@@ -4,9 +4,14 @@ from pathlib import Path
 GRAMMAR_PATH = Path(__file__).resolve().parent.parent.parent / "grammar.lark"
 PROJECT_ROOT = GRAMMAR_PATH.parent
 
+parser = None
+
 def get_parser():
-  with open(GRAMMAR_PATH, 'r') as grammar_file:
-    return Lark(grammar_file.read(), parser="lalr", lexer="basic", propagate_positions=True)
+  global parser
+  if parser is None:
+    with open(GRAMMAR_PATH, 'r') as grammar_file:
+      parser = Lark(grammar_file.read(), parser="lalr", lexer="basic", propagate_positions=True)
+  return parser
 
 def parse_file(path):
   parser = get_parser()
