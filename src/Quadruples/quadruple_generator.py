@@ -145,10 +145,12 @@ def print_quadruples(quadruples: list[Quadruple]):
             return ""
         elif isinstance(op, Variable):
             return op.name
+        elif isinstance(op, bool):
+            return "true" if op else "false"
         else:
             return op
 
-    print(f"{" ":>3} {'Op':>7} {'Op1':>5} {'Op2':>5} {'Res':>5}")
+    print(f"{" ":>3} {'Op':>7} {'Op1':>7} {'Op2':>7} {'Res':>7}")
 
     for i, q in enumerate(quadruples):
-        print(f"{i:>3} {q.operator.upper():>7} {parse(q.operand1):>5} {parse(q.operand2):>5} {parse(q.result):>5}")
+        print(f"{i:>3} {q.operator.upper():>7} {parse(q.operand1):>7} {parse(q.operand2):>7} {parse(q.result):>7}")

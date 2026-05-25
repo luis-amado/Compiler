@@ -1,9 +1,6 @@
-program main{
+progsram main {
+	var a : bool;
 	begin;
-		write("hola mundo");
-		x := 5;
-		y := 3.14;
-		flag := true;
-		letter := 'a';
+		a := 10.0 * (10 * 4 * 7);
 	end;
 }
