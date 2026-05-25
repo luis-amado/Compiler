@@ -28,7 +28,7 @@ def generate_quadruples(program: nodes.ProgramNode) -> list[Quadruple]:
         if len(available_temps) > 0:
             return Variable(available_temps.pop())
         else:
-            new_temp += 1;
+            new_temp += 1
             return Variable(f"#{new_temp}")
     
     def is_temp(v: Operand):
@@ -140,5 +140,15 @@ def generate_quadruples(program: nodes.ProgramNode) -> list[Quadruple]:
     return quadruples
 
 def print_quadruples(quadruples: list[Quadruple]):
+    def parse(op: Operand):
+        if op is None:
+            return ""
+        elif isinstance(op, Variable):
+            return op.name
+        else:
+            return op
+
+    print(f"{" ":>3} {'Op':>7} {'Op1':>5} {'Op2':>5} {'Res':>5}")
+
     for i, q in enumerate(quadruples):
-        print(f"{i} {q.operator} {q.operand1} {q.operand2} {q.result}")
+        print(f"{i:>3} {q.operator.upper():>7} {parse(q.operand1):>5} {parse(q.operand2):>5} {parse(q.result):>5}")

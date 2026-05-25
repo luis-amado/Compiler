@@ -1,7 +1,7 @@
 from lark import Lark
 from pathlib import Path
 
-GRAMMAR_PATH = Path(__file__).resolve().parent.parent / "grammar.lark"
+GRAMMAR_PATH = Path(__file__).resolve().parent.parent.parent / "grammar.lark"
 PROJECT_ROOT = GRAMMAR_PATH.parent
 
 def get_parser():

@@ -29,7 +29,7 @@ class Symbol:
   type: str
   value: any
 
-def interpret(quadruples: list[Quadruple]):
+def interpret(quadruples: list[Quadruple], print_fn = print):
 
   symbols: dict[str, Symbol] = {}
   jump_stack = []
@@ -63,7 +63,7 @@ def interpret(quadruples: list[Quadruple]):
     elif op == "*": return op1 * op2
     elif op == "/": 
       if isinstance(op1, int) and isinstance(op2, int):
-        return op1 // op2;
+        return op1 // op2
       return op1 / op2
     elif op == "%": return op1 % op2
     elif op == "<": return op1 < op2
@@ -80,7 +80,7 @@ def interpret(quadruples: list[Quadruple]):
     op = quadruples[i].operator
     q = quadruples[i]
     if op == "write":
-      print(get_value(q.operand1))
+      print_fn(get_value(q.operand1))
     elif op == "goto":
       i = q.result
       continue
@@ -112,3 +112,13 @@ def interpret(quadruples: list[Quadruple]):
       set_value(q.result.name, not get_value(q.operand1))
     else: set_value(q.result.name, simple_op(op, get_value(q.operand1), get_value(q.operand2)))
     i += 1
+
+def interpret_silent(quadruples: list[Quadruple]):
+  results = []
+
+  def print_to_results(val):
+    results.append(val)
+
+  interpret(quadruples, print_to_results)
+
+  return results
