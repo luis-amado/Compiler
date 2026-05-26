@@ -20,7 +20,6 @@ def generate_quadruples(program: nodes.ProgramNode) -> list[Quadruple]:
     quadruples: list[Quadruple] = []
     available_temps = []
     new_temp = 0
-    step_operations = []
 
     function_addresses = {}
     
@@ -53,14 +52,21 @@ def generate_quadruples(program: nodes.ProgramNode) -> list[Quadruple]:
     def curr_address():
         return len(quadruples) - 1
     
-    def generate_expression(exp: nodes.ExpressionNode) -> Operand:
+    def generate_expression(exp: nodes.ExpressionNode, value_used: bool = True) -> Operand:
         if isinstance(exp, nodes.LiteralNode):
             return exp.value
         elif isinstance(exp, nodes.VariableNode):
+            var = Variable(exp.name.value)
             if exp.step_operator is not None:
                 op = exp.step_operator.type[0]
-                step_operations.append((Variable(exp.name.value), op))
-            return Variable(exp.name.value)
+                if value_used:
+                    temp_value = temp()
+                    gen_q(":=", var, None, temp_value)
+                    gen_q(op, var, 1, var)
+                    return temp_value
+                else:
+                    gen_q(op, var, 1, var)
+            return var
         elif isinstance(exp, nodes.OperationNode):
             operand1 = generate_expression(exp.valueLeft)
             operand2 = generate_expression(exp.valueRight)
@@ -80,7 +86,7 @@ def generate_quadruples(program: nodes.ProgramNode) -> list[Quadruple]:
             elif isinstance(node, nodes.AssignmentNode):
                 gen_q(":=", generate_expression(node.value), None, Variable(node.identifier.value))
             elif isinstance(node, nodes.ExpressionNode):
-                generate_expression(node)
+                generate_expression(node, value_used=False)
             elif isinstance(node, nodes.IfNode):
                 first_jump = gen_q("gotof", generate_expression(node.condition), None, None)
                 generate_code_blocks(node.code_blocks)
@@ -108,15 +114,11 @@ def generate_quadruples(program: nodes.ProgramNode) -> list[Quadruple]:
             elif isinstance(node, nodes.FunctionCallNode):
                 gen_q("call", None, None, function_addresses[node.name.value])
             
-            while (len(step_operations) > 0):
-                var, op = step_operations.pop()
-                gen_q(op, var, 1, var)
-            
     default_values = {
         "int": 0,
         "float": 0.0,
         "string": "",
-        "char": "\0", # TODO: figure out if this is a good default char value
+        "char": "\0",
         "bool": False,
     }
 

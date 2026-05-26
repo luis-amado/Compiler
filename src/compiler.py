@@ -8,7 +8,45 @@ import os
 
 def handle_error(error, err_type):
   print(f"\033[31m{err_type}: {error}\033[0m")
-  sys.exit(1)
+
+def compile_file(file_path: str):
+  if not os.path.isfile(file_path):
+    print(f"File '{file_path}' not found")
+    return 1
+
+  try:
+    parse_tree = parse_file(file_path)
+    ast = ASTTransformer().transform(parse_tree)
+    semantic_analysis(ast)
+    quadruples = generate_quadruples(ast)
+  except SyntaxError as e:
+    handle_error(e, "Syntax Error")
+    return 1
+  except SemanticError as e:
+    handle_error(e, "Semantic Error")
+    return 1
+
+  interpret(quadruples)
+  return 0
+
+def compile_file_quads(file_path: str, show_error: bool = False):
+  if not os.path.isfile(file_path):
+    print(f"File '{file_path}' not found")
+    return None
+
+  try:
+    parse_tree = parse_file(file_path)
+    ast = ASTTransformer().transform(parse_tree)
+    semantic_analysis(ast)
+    quadruples = generate_quadruples(ast)
+  except SyntaxError as e:
+    if show_error: handle_error(e, "Syntax Error")
+    return None
+  except SemanticError as e:
+    if show_error: handle_error(e, "Semantic Error")
+    return None
+  
+  return quadruples
 
 def main():
   """
@@ -27,27 +65,13 @@ def main():
     print("Provide a file name to compile")
     sys.exit(1)
   
-  file_path = sys.argv[1]
-  if not os.path.isfile(file_path):
-    print(f"File '{file_path}' not found")
+  quadruples = compile_file_quads(sys.argv[1], show_error=True)
+  if quadruples == None:
     sys.exit(1)
-
-  try:
-    parse_tree = parse_file(file_path)
-    ast = ASTTransformer().transform(parse_tree)
-    semantic_analysis(ast)
-    quadruples = generate_quadruples(ast)
-  except SyntaxError as e:
-    handle_error(e, "Syntax Error")
-  except SemanticError as e:
-    handle_error(e, "Semantic Error")
 
   if "-q" in sys.argv or "--quads" in sys.argv:
     print("\n\nGenerated quadruple table:\n")
     print_quadruples(quadruples)
-  else:
-
-    interpret(quadruples)
   
 if __name__ == "__main__":
   main()

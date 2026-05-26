@@ -6,7 +6,7 @@ class SemanticError(Exception):
 # Type codes:
 # I = int, F = float, S = string, C = char, B = bool, X = invalid
 SEMANTIC_RULES = {
-  # op1, op2     +,   *-,  /%,  ><,  ==,  &|
+  # op1, op2     +,  *-,  /%,  ><,  ==,  &|
   ('I', 'I'): ('I', 'I', 'I', 'B', 'B', 'X'),
   ('I', 'F'): ('F', 'F', 'F', 'B', 'B', 'X'),
   ('F', 'I'): ('F', 'F', 'F', 'B', 'B', 'X'),
@@ -61,11 +61,10 @@ CODE_TO_TYPE = {
   "B": "bool",
 }
 
-def semantic_analysis(ast: ProgramNode, print_fn=print):
+def semantic_analysis(ast: ProgramNode):
   symbol_table = {}
-  last_address = 0
 
-  last_address = register_variables(ast.var_declarations, symbol_table, last_address)
+  register_variables(ast.var_declarations, symbol_table)
   register_procedures(ast.procedures, symbol_table)
 
   analyze_block(ast.begin_end, symbol_table)
@@ -75,7 +74,7 @@ def semantic_analysis(ast: ProgramNode, print_fn=print):
     
   return symbol_table
 
-def register_variables(var_declarations, symbol_table, last_address):
+def register_variables(var_declarations, symbol_table):
   for var_declaration in var_declarations:
     for identifier in var_declaration.identifiers:
       name = identifier.value
@@ -83,10 +82,7 @@ def register_variables(var_declarations, symbol_table, last_address):
       if name in symbol_table:
         raise SemanticError(f"Redefinition of identifier: {name} on line {identifier.line}")
 
-      symbol_table[name] = (last_address, var_declaration.var_type)
-      last_address += 1
-
-  return last_address
+      symbol_table[name] = var_declaration.var_type
 
 def register_procedures(procedures, symbol_table):
   for procedure in procedures:
@@ -97,7 +93,7 @@ def register_procedures(procedures, symbol_table):
         f"Redefinition of identifier: {name} on line {procedure.procedure_name.line}"
       )
 
-    symbol_table[name] = (-1, "procedure")
+    symbol_table[name] = "procedure"
 
 def analyze_block(block, symbol_table):
   for statement in block.code_blocks:
@@ -129,7 +125,7 @@ def analyze_assignment(assignment, symbol_table):
       f"Use of undeclared variable: {variable_name} on line {assignment.identifier.line}"
     )
 
-  _, variable_type = symbol_table[variable_name]
+  variable_type = symbol_table[variable_name]
 
   if variable_type == "procedure":
     raise SemanticError(
@@ -197,7 +193,7 @@ def analyze_step(variable_node, symbol_table):
       f"Use of undeclared variable: {variable_name} on line {variable_node.line}"
     )
 
-  _, variable_type = symbol_table[variable_name]
+  variable_type = symbol_table[variable_name]
 
   if variable_type not in ("int", "float"):
     raise SemanticError(
@@ -213,7 +209,7 @@ def analyze_function_call(function_call, symbol_table):
       f"Call to undeclared function: {function_name} on line {function_call.line}"
     )
 
-  _, symbol_type = symbol_table[function_name]
+  symbol_type = symbol_table[function_name]
 
   if symbol_type != "procedure":
     raise SemanticError(f"{function_name} is not a function on line {function_call.line}")
@@ -250,7 +246,7 @@ def analyze_variable(variable_node, symbol_table):
       f"Use of undeclared variable: {variable_name} on line {variable_node.name.line}"
     )
 
-  _, variable_type = symbol_table[variable_name]
+  variable_type = symbol_table[variable_name]
 
   if variable_type == "procedure":
     raise SemanticError(

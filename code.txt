@@ -1,7 +1,7 @@
 program main {
-	var a,b,x,y,i,j : int;
-	begin;
-		write(i++ + i++);
-		write(i);
-	end;
+	var a: float;
+  begin;
+		a := 3.0;
+		write(a);
+  end;
 }
