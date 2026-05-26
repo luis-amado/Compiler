@@ -1,6 +1,7 @@
-progsram main {
-	var a : bool;
+program main {
+	var a,b,x,y,i,j : int;
 	begin;
-		a := 10.0 * (10 * 4 * 7);
+		write(i++ + i++);
+		write(i);
 	end;
 }

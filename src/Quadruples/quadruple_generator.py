@@ -20,6 +20,7 @@ def generate_quadruples(program: nodes.ProgramNode) -> list[Quadruple]:
     quadruples: list[Quadruple] = []
     available_temps = []
     new_temp = 0
+    step_operations = []
 
     function_addresses = {}
     
@@ -58,7 +59,7 @@ def generate_quadruples(program: nodes.ProgramNode) -> list[Quadruple]:
         elif isinstance(exp, nodes.VariableNode):
             if exp.step_operator is not None:
                 op = exp.step_operator.type[0]
-                gen_q(op, Variable(exp.name.value), 1, Variable(exp.name.value))
+                step_operations.append((Variable(exp.name.value), op))
             return Variable(exp.name.value)
         elif isinstance(exp, nodes.OperationNode):
             operand1 = generate_expression(exp.valueLeft)
@@ -106,6 +107,10 @@ def generate_quadruples(program: nodes.ProgramNode) -> list[Quadruple]:
                 fill_jump(jump_to_end, curr_address() + 1)
             elif isinstance(node, nodes.FunctionCallNode):
                 gen_q("call", None, None, function_addresses[node.name.value])
+            
+            while (len(step_operations) > 0):
+                var, op = step_operations.pop()
+                gen_q(op, var, 1, var)
             
     default_values = {
         "int": 0,
