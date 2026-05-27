@@ -1,0 +1,20 @@
+program main {
+  var i : int;
+  function inc() {
+    begin;
+      i++;
+    end;
+  }
+  begin;
+    i := 0;
+    write(i);
+    inc();
+    write(i);
+    inc();
+    write(i);
+  end;
+}
+###
+0
+1
+2

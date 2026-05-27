@@ -1,0 +1,14 @@
+program main {
+  var a, n : int;
+  begin;
+    a := 1;
+    n := 5;
+    while (n > 1) do {
+      a := a * 3;
+      n--;
+    }
+    write(a);
+  end;
+}
+###
+81

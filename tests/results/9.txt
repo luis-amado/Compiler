@@ -1,0 +1,30 @@
+program main {
+  var p, q, r, s : int;
+  var valid : int;
+  
+  function check() {
+    begin;
+      if (((p > q) or (r < s)) and not ((p == r) and (q == s))) then {
+         valid := 1;
+      } else {
+         valid := 0;
+      }
+    end;
+  }
+
+  begin;
+    p := 10;
+    q := 5;
+    r := 10;
+    s := 5;
+    check();
+    write(valid);
+    
+    s := 20;
+    check();
+    write(valid);
+  end;
+}
+###
+0
+1

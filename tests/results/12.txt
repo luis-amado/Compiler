@@ -1,0 +1,19 @@
+program main {
+  var i, j : int;
+  var s : string;
+  begin;
+    for (i := 1; i <= 5; i++) {
+      s := "";
+      for (j := 0; j < i; j++) {
+        s := s + "a";
+      }
+      write(s);
+    }
+  end;
+}
+###
+a
+aa
+aaa
+aaaa
+aaaaa

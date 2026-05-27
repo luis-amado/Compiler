@@ -1,0 +1,13 @@
+program main {
+  var a : int;
+  begin;
+    a := 5;
+    if (a > 10) then {
+      write(a);
+    } else {
+      write("Not greater than 10");
+    }
+  end;
+}
+###
+Not greater than 10

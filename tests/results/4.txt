@@ -1,0 +1,24 @@
+program main {
+  var counter, limit, result : int;
+  
+  function process() {
+    begin;
+      if ((counter < limit) and (counter % 2 == 0)) then {
+        result := result + counter;
+      } else {
+        result := result - 1;
+      }
+    end;
+  }
+
+  begin;
+    result := 0;
+    limit := 5;
+    for (counter := 0; counter < limit; counter++) {
+      process();
+    }
+    write(result);
+  end;
+}
+###
+4

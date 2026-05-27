@@ -1,0 +1,19 @@
+program main {
+  var i : int;
+  begin;
+    for (i := 0; i < 10; i++) {
+      write(i);
+    }
+  end;
+}
+###
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9

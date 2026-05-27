@@ -1,0 +1,32 @@
+program main {
+  var a, b, next, count : int;
+  
+  function advance() {
+    begin;
+      next := a + b;
+      a := b;
+      b := next;
+      count++;
+    end;
+  }
+
+  begin;
+    a := 0;
+    b := 1;
+    count := 0;
+    write(a);
+    write(b);
+    while (count < 5) do {
+      advance();
+      write(b);
+    }
+  end;
+}
+###
+0
+1
+1
+2
+3
+5
+8

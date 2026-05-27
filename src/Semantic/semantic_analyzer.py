@@ -114,6 +114,8 @@ def analyze_statement(statement, symbol_table):
     analyze_function_call(statement, symbol_table)
   elif isinstance(statement, VariableNode):
     analyze_step(statement, symbol_table)
+  elif isinstance(statement, ExpressionNode):
+    analyze_expression(statement, symbol_table)
   else:
     raise SemanticError(f"Unsupported statement on line {statement.line}")
 

@@ -1,0 +1,27 @@
+program main {
+  var x, y, steps : int;
+  
+  function mutate() {
+    begin;
+      x := x + 2;
+      y := y - 1;
+      steps++;
+    end;
+  }
+
+  begin;
+    x := 0;
+    y := 10;
+    steps := 0;
+    while ((x < 15) and (y > 0) and not (steps == 6)) do {
+      mutate();
+    }
+    write(x);
+    write(y);
+    write(steps);
+  end;
+}
+###
+12
+4
+6

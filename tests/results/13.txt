@@ -1,0 +1,28 @@
+program main {
+  var i : int;
+  function rec() {
+    begin;
+      write(i);
+      if (i > 0) then {
+        i--;
+        rec();
+      }
+    end;
+  }
+  begin;
+    i := 10;
+    rec();
+  end;
+}
+###
+10
+9
+8
+7
+6
+5
+4
+3
+2
+1
+0

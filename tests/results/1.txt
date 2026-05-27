@@ -1,0 +1,18 @@
+program main {
+  var x, y : int;
+  begin;
+    x := 10;
+    y := 20;
+    if ((x < y) and not (x == 10)) then {
+      write(0);
+    } else {
+      if ((x == 10) or (y < 5)) then {
+        write(1);
+      } else {
+        write(0);
+      }
+    }
+  end;
+}
+###
+1

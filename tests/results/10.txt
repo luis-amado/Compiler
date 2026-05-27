@@ -1,0 +1,42 @@
+program main {
+  var n, i : int;
+  var limit : float;
+  var is_valid : bool;
+  var msg : string;
+  var dash : char;
+
+  function validate() {
+    begin;
+      if (n > 0 and limit > 0.0) then {
+        is_valid := true;
+      } else {
+        is_valid := false;
+      }
+    end;
+  }
+
+  begin;
+    n := 3;
+    limit := 1.5;
+    dash := '-';
+    msg := "Data";
+    
+    validate();
+    
+    if (is_valid) then {
+      for (i := 0; i < 3; i++) {
+        msg := dash + msg + dash;
+      }
+      writeln(msg);
+      
+      while (n > 0) do {
+        limit := limit + 1.0;
+        n--;
+      }
+      writeln(limit);
+    }
+  end;
+}
+###
+---Data---
+4.5

@@ -1,0 +1,19 @@
+program main {
+  var val, i : int;
+  begin;
+    val := 100;
+    for (i := 0; i < 3; i++) {
+      if (val > 50) then {
+        while (val > 80) do {
+          val := val - 5;
+        }
+      } else {
+        val := val + 10;
+      }
+      val := val - i;
+    }
+    write(val);
+  end;
+}
+###
+77

@@ -1,0 +1,16 @@
+program main {
+  var i, j, sum : int;
+  begin;
+    sum := 0;
+    i := 3;
+    while (i > 0) do {
+      for (j := 1; j < 4; j++) {
+        sum := sum + (i * j);
+      }
+      i--;
+    }
+    write(sum);
+  end;
+}
+###
+36

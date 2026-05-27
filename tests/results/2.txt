@@ -1,0 +1,21 @@
+program main {
+  var a, b, c : int;
+  begin;
+    a := 5;
+    b := 10;
+    c := 15;
+    if ((a < b) and (b < c) and not (a == c)) then {
+      write("All true");
+    } else {
+      write("False");
+    }
+    if ((a > b) or (c < b)) then {
+      write("Or true");
+    } else {
+      write("Or false");
+    }
+  end;
+}
+###
+All true
+Or false

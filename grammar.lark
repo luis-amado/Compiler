@@ -35,7 +35,7 @@ block: "{" code_block* "}"
 
 variable: IDENTIFIER step_operator?
 !step_operator: "++" | "--"
-constant: INT | FLOAT | CHAR | STRING | bool
+?constant: INT | FLOAT | CHAR | STRING | bool
 
 // Operators
 !rel_op: "<" | ">" | "<=" | ">=" | "==" | "!="

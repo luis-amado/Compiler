@@ -1,0 +1,20 @@
+program main {
+  var n, steps : int;
+  begin;
+    n := 6;
+    steps := 0;
+    while (n > 1) do {
+      if (n % 2 == 0) then {
+        n := n / 2;
+      } else {
+        n := (n * 3) + 1;
+      }
+      steps++;
+    }
+    write("Collatz steps:");
+    write(steps);
+  end;
+}
+###
+Collatz steps:
+8
