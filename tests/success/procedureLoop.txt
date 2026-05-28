@@ -1,0 +1,48 @@
+program main{
+	var i,j,n,total,calls,localSum : int;
+	var active : bool;
+
+	function accumulate() {
+		begin;
+			localSum := 0;
+
+			for(j:=1;j<=n;j++){
+				if((j % 2) == 0) then
+				{
+					localSum := localSum + j;
+				}else
+				{
+					localSum := localSum + (j * 2);
+				}
+			}
+
+			total := total + localSum;
+			calls++;
+		end;
+	}
+
+	begin;
+		write("procedure loop interaction");
+
+		n := 3;
+		total := 0;
+		calls := 0;
+		active := true;
+
+		for(i:=0;i<4;i++){
+			accumulate();
+
+			if(total > 25 and active == true) then
+			{
+				write("threshold");
+				active := false;
+			}
+
+			n++;
+		}
+
+		write(total);
+		write(calls);
+		write(n);
+	end;
+}

@@ -1,0 +1,50 @@
+program main{
+	var outer,inner,count,total,last,penalty : int;
+	var done : bool;
+
+	begin;
+		write("decrement and exit patterns");
+
+		outer := 6;
+		count := 0;
+		total := 0;
+		last := 0;
+		penalty := 0;
+		done := false;
+
+		while(outer > 0 and done == false) do
+		{
+			for(inner:=0;inner<outer;inner++){
+				if((outer + inner) > 6) then
+				{
+					total := total + outer + inner;
+					count++;
+				}else
+				{
+					if((inner % 2) == 0) then
+					{
+						penalty := penalty + 2;
+					}else
+					{
+						penalty++;
+					}
+				}
+
+				last := inner;
+
+				if(total >= 50) then
+				{
+					done := true;
+				}
+			}
+
+			outer--;
+		}
+
+		write(total);
+		write(count);
+		write(penalty);
+		write(last);
+		write(outer);
+	end;
+}

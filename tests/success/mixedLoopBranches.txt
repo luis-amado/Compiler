@@ -1,0 +1,48 @@
+program main{
+	var i,j,limit,sum,product,branchA,branchB,temp : int;
+	var keepGoing,switched : bool;
+
+	begin;
+		write("mixed loops branches");
+
+		i := 0;
+		limit := 4;
+		sum := 0;
+		product := 1;
+		branchA := 0;
+		branchB := 0;
+		switched := false;
+		keepGoing := true;
+
+		while(i < limit and keepGoing == true) do
+		{
+			for(j:=0;j<limit;j++){
+				temp := (i + 1) * (j + 2);
+
+				if((temp % 3) == 0 or switched == true) then
+				{
+					sum := sum + temp;
+					branchA++;
+					switched := true;
+				}else
+				{
+					product := product + temp;
+					branchB++;
+				}
+
+				if(sum > 25 and not (i == 0)) then
+				{
+					keepGoing := false;
+				}
+			}
+
+			i++;
+		}
+
+		write(sum);
+		write(product);
+		write(branchA);
+		write(branchB);
+		write(i);
+	end;
+}

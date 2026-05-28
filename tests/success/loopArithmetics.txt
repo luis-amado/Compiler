@@ -1,0 +1,48 @@
+program main{
+	var row,col,diag,above,below,value,total,score : int;
+
+	begin;
+		write("loop arithmetic matrix");
+
+		diag := 0;
+		above := 0;
+		below := 0;
+		total := 0;
+		score := 0;
+
+		for(row:=0;row<5;row++){
+			for(col:=0;col<5;col++){
+				value := (row + 1) * (col + 2);
+				total := total + value;
+
+				if(row == col) then
+				{
+					diag := diag + value;
+				}else
+				{
+					if(row < col) then
+					{
+						above := above + value;
+					}else
+					{
+						below := below + value;
+					}
+				}
+
+				if((value % 2) == 0 and value > 6) then
+				{
+					score := score + (value / 2);
+				}else
+				{
+					score := score - 1;
+				}
+			}
+		}
+
+		write(total);
+		write(diag);
+		write(above);
+		write(below);
+		write(score);
+	end;
+}

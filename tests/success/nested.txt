@@ -1,0 +1,48 @@
+program main{
+	var i,j,k,n,total,evenCount,oddCount,guard : int;
+	var flag : bool;
+
+	begin;
+		write("nested control stress");
+
+		n := 5;
+		total := 0;
+		evenCount := 0;
+		oddCount := 0;
+		guard := 0;
+		flag := true;
+
+		for(i:=1;i<=n;i++){
+			for(j:=1;j<=i;j++){
+				k := j;
+
+				while(k > 0 and total < 80) do
+				{
+					if((k % 2) == 0) then
+					{
+						evenCount++;
+						total := total + i + k;
+					}else
+					{
+						oddCount++;
+						total := total + j;
+					}
+
+					if(total >= 40 and flag == true) then
+					{
+						write("hit forty");
+						flag := false;
+					}
+
+					k--;
+					guard++;
+				}
+			}
+		}
+
+		write(total);
+		write(evenCount);
+		write(oddCount);
+		write(guard);
+	end;
+}
