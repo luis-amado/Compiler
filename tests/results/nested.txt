@@ -46,3 +46,10 @@ program main{
 		write(guard);
 	end;
 }
+###
+nested control stress
+hit forty
+80
+8
+15
+23

@@ -46,3 +46,10 @@ program main{
 		write(score);
 	end;
 }
+###
+loop arithmetic matrix
+300
+70
+105
+125
+88

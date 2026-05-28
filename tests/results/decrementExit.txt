@@ -48,3 +48,10 @@ program main{
 		write(outer);
 	end;
 }
+###
+decrement and exit patterns
+69
+8
+5
+4
+4
