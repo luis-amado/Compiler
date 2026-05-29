@@ -36,13 +36,13 @@ def generate_quadruples(program: nodes.ProgramNode) -> list[Quadruple]:
 
         return v.name.startswith("#") 
 
-    def gen_q(a, b, c, d):
+    def gen_q(operator, operand1, operand2, result):
         nonlocal quadruples
-        quadruples.append(Quadruple(a, b, c, d))
-        if is_temp(b):
-            available_temps.append(b.name)
-        if is_temp(c):
-            available_temps.append(c.name)
+        quadruples.append(Quadruple(operator, operand1, operand2, result))
+        if is_temp(operand1):
+            available_temps.append(operand1.name)
+        if is_temp(operand2):
+            available_temps.append(operand2.name)
         return len(quadruples) - 1
     
     def fill_jump(index, address):
