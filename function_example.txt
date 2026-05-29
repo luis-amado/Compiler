@@ -1,0 +1,19 @@
+program main {
+  var i, n : int;
+  function recursive() {
+    begin;
+      i--;
+      if (i > 0) then {
+        n := n * 2;
+        recursive();
+      }
+    end;
+  }
+  begin;
+    n := 2;
+    i := 5;
+    recursive();
+    write("Recursive result:");
+    write(n);
+  end;
+}
